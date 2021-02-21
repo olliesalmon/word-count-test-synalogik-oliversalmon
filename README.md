@@ -13,16 +13,16 @@ For example given a file that contains the following text:
 
 We would expect the following output:
 
-Word count = 9
-Average word length = 4.556
-Number of words of length 1 is 1
-Number of words of length 2 is 1
-Number of words of length 3 is 1
-Number of words of length 4 is 2
-Number of words of length 5 is 2
-Number of words of length 7 is 1
-Number of words of length 10 is 1
-The most frequently occurring word length is 2, for word lengths of 4 & 5
+*Word count = 9
+*Average word length = 4.556
+*Number of words of length 1 is 1
+*Number of words of length 2 is 1
+*Number of words of length 3 is 1
+*Number of words of length 4 is 2
+*Number of words of length 5 is 2
+*Number of words of length 7 is 1
+*Number of words of length 10 is 1
+*The most frequently occurring word length is 2, for word lengths of 4 & 5
 
 Note that we will test code submissions on a number of files of various lengths ranging from the above example through to the large books such as the Bible (http://janelwashere.com/files/bible_daily.txt).
 
@@ -32,40 +32,32 @@ Clue – Do not forget to consider formatted numbers.
 ## Plan
 
 CONTROLLER:
-	void run();
-	String getTextFileName();
-	TextStats analyseText();
-	void displayResults();
+	*void run();
+	*String getTextFileName();
+	*TextStats analyseText();
+	*void displayResults();
 	
 DTO:
 	TextStats:
-		private int noWords;					Getter/Setter
-		private HashMap<Integerint> wordLengthCount;		Getter
-		private float averageLength;				Getter/Setter
-		private HashMap<Integer, List<int>> mostFreqLengths;	Getter
+		*private int noWords;					Getter/Setter
+		*private HashMap<Integerint> wordLengthCount;		Getter
+		*private float averageLength;				Getter/Setter
+		*private HashMap<Integer, List<int>> mostFreqLengths;	Getter
 
-		void incrementWordLengthCount(int wordLengthToIncrement);
-		void calculateAverageLength();
-		void calculateMostFreqLengths();
+		*void incrementWordLengthCount(int wordLengthToIncrement);
+		*void calculateAverageLength();
+		*void calculateMostFreqLengths();
 
 DAO:
-	List(String) getListTextFiles();
-	String[] loadTextFile(String);
-	TextStats analyseTextArray(String[] textAsArray)
-	TextStats calculateTextStats(TextStats textInfoToPopulate);
+	*List(String) getListTextFiles();
+	*String[] loadTextFile(String);
+	*TextStats analyseTextArray(String[] textAsArray)
+	*TextStats calculateTextStats(TextStats textInfoToPopulate);
 
 VIEW:
-	void displayStartBanner();
-	int displayContinueOrQuitMenuAndGetUserSelection();
-	String displayTextFilesAndGetUserSelection(List(String));
-	void displayWordCount();
-	void displayAverageLength();
-	void displayWordLengthMap();
-	
-
-
-
-
-
-
-
+	*void displayStartBanner();
+	*int displayContinueOrQuitMenuAndGetUserSelection();
+	*String displayTextFilesAndGetUserSelection(List(String));
+	*void displayWordCount();
+	*void displayAverageLength();
+	*void displayWordLengthMap();
