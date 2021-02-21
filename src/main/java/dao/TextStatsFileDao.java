@@ -7,7 +7,9 @@ import java.util.List;
 public interface TextStatsFileDao {
     List<String> getListTextFiles() throws NonExistentTextFileException;
 
-    String[] loadTextFile(String textFileName) throws FilePersistenceException;
+    void verifyTextFileNotEmpty(String textFileName) throws EmptyTextFileException;
+
+    String[] loadTextFileToArray(String textFileName) throws FilePersistenceException;
 
     TextStats analyseTextArray(String[] textAsArray);
 

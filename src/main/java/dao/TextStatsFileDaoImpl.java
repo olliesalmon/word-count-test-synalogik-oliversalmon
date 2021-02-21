@@ -8,16 +8,14 @@ import java.util.List;
 @Component
 public class TextStatsFileDaoImpl implements TextStatsFileDao{
     public final String TEXT_FILE_DIR;
-    public final String DELIMITER;
+    public final String DELIMITER = " ";
 
     public TextStatsFileDaoImpl() {
         TEXT_FILE_DIR = "/textfiles";
-        DELIMITER = " ";
     }
 
-    public TextStatsFileDaoImpl(String textFileDir, String delimiter) {
+    public TextStatsFileDaoImpl(String textFileDir) {
         TEXT_FILE_DIR = textFileDir;
-        DELIMITER = delimiter;
     }
 
     @Override
@@ -31,7 +29,7 @@ public class TextStatsFileDaoImpl implements TextStatsFileDao{
     }
 
     @Override
-    public String[] loadTextFile(String textFileName) throws FilePersistenceException {
+    public String[] loadTextFileToArray(String textFileName) throws FilePersistenceException {
         //TODO
         return new String[0];
     }

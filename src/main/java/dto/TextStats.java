@@ -1,17 +1,18 @@
 package dto;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class TextStats {
     private int noWords;
     private final Map<Integer, Integer> wordLengthCount;
-    private float averageLength;
+    private BigDecimal averageLength;
     private final Map<Integer, List<Integer>> mostFreqLengths;
 
     public TextStats() {
         noWords = 0;
         wordLengthCount = new HashMap<>();
-        averageLength = 0;
+        averageLength = new BigDecimal("0");
         mostFreqLengths = new HashMap<>();
     }
 
@@ -27,6 +28,14 @@ public class TextStats {
         //TODO
     }
 
+    public void putIntoWordLengthMap(int key, int value) {
+        wordLengthCount.put(key, value);
+    }
+
+    public void putIntoMostFreqLengthsMap(int countMostFreq, List<Integer> listMostFreq) {
+        mostFreqLengths.put(countMostFreq, listMostFreq);
+    }
+
     public int getNoWords() {
         return noWords;
     }
@@ -35,11 +44,11 @@ public class TextStats {
         this.noWords = noWords;
     }
 
-    public float getAverageLength() {
+    public BigDecimal getAverageLength() {
         return averageLength;
     }
 
-    public void setAverageLength(float averageLength) {
+    public void setAverageLength(BigDecimal averageLength) {
         this.averageLength = averageLength;
     }
 
@@ -57,9 +66,9 @@ public class TextStats {
         if (o == null || getClass() != o.getClass()) return false;
         TextStats textStats = (TextStats) o;
         return noWords == textStats.noWords &&
-                Float.compare(textStats.averageLength, averageLength) == 0 &&
-                Objects.equals(wordLengthCount, textStats.wordLengthCount) &&
-                Objects.equals(mostFreqLengths, textStats.mostFreqLengths);
+                wordLengthCount.equals(textStats.wordLengthCount) &&
+                averageLength.equals(textStats.averageLength) &&
+                mostFreqLengths.equals(textStats.mostFreqLengths);
     }
 
     @Override
