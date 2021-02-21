@@ -3,14 +3,16 @@
  */
 package ui;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+@Component
 public class UserIOImpl implements UserIO {
-
     Scanner scanner = new Scanner(System.in);
 
     @Override

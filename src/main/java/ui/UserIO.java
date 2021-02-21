@@ -6,7 +6,6 @@ package ui;
 import java.math.BigDecimal;
 
 public interface UserIO {
-
     void print(String message);
 
     String readString(String prompt);
