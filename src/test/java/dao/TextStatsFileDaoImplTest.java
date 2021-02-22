@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,14 +16,14 @@ class TextStatsFileDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        testDao = new TextStatsFileDaoImpl("/testtextfiles");
+        testDao = new TextStatsFileDaoImpl("testtextfiles/");
     }
 
     @Test
-    void testGetListTextFiles() throws NonExistentTextFileException {
+    void testGetListTextFiles() throws NonExistentTextFileException, MissingDirectoryException {
         List<String> expectedListTextFiles = new ArrayList<>();
-        expectedListTextFiles.add("testfile.txt");
-        expectedListTextFiles.add("emptyfile.txt");
+        expectedListTextFiles.add("0testfile.txt");
+        expectedListTextFiles.add("1emptyfile.txt");
 
         List<String> actualListTextFiles = testDao.getListTextFiles();
 
@@ -30,25 +31,19 @@ class TextStatsFileDaoImplTest {
     }
 
     @Test
-    void testVerifyTextFileNotEmpty() throws EmptyTextFileException {
-        //No exception should be thrown for this text file
-        testDao.verifyTextFileNotEmpty("testfile.txt");
-    }
-
-    @Test
-    void testVerifyTextFileIsEmpty() throws EmptyTextFileException {
-        assertThrows(EmptyTextFileException.class, () -> testDao.verifyTextFileNotEmpty("emptyfile.txt"),
+    void testLoadEmptyTextFileToArray() throws EmptyTextFileException {
+        assertThrows(EmptyTextFileException.class, () -> testDao.loadTextFileToArray("1emptyfile.txt"),
             "The file is empty so the exception should be thrown" );
 
     }
 
     @Test
-    void testLoadTextFileToArray() throws FilePersistenceException {
+    void testLoadFilledTextFileToArray() throws FilePersistenceException, EmptyTextFileException {
         String[] expectedArray = {"Hello", "world", "&", "good", "morning.", "The", "date", "is", "18/05/2016"};
 
-        String[] actualArray = testDao.loadTextFileToArray("testfile.txt");
+        String[] actualArray = testDao.loadTextFileToArray("0testfile.txt");
 
-        assertEquals(expectedArray, actualArray, "The actualArray should be equal to the expectedArray");
+        assertTrue(Arrays.equals(expectedArray, actualArray), "The actualArray should be equal to the expectedArray");
     }
 
     @Test

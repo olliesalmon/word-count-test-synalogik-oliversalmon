@@ -1,7 +1,9 @@
 package dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TextStats {
     private int noWords;
@@ -16,16 +18,26 @@ public class TextStats {
         mostFreqLengths = new HashMap<>();
     }
 
-    void incrementWordLengthCount(int wordLengthToIncrement) {
-        //TODO
+    public void incrementWordLengthCount(int wordLengthToIncrement) {
+        wordLengthCount.merge(wordLengthToIncrement, 1, (a, b) -> a + b);
     }
 
-    void calculateAverageLength() {
-        //TODO
+    public void calculateAverageLength() {
+        final int[] sumLetters = {0};
+        wordLengthCount.forEach((k, v) -> sumLetters[0] += k * v);
+        averageLength = new BigDecimal(String.valueOf(sumLetters[0])).divide(new BigDecimal(String.valueOf(noWords)), 3, RoundingMode.HALF_UP);
     }
 
-    void calculateMostFreqLengths() {
-        //TODO
+    public void calculateMostFreqLengths() {
+        int max = Collections.max(wordLengthCount.values());
+        List<Integer> listMostFreq = new ArrayList<>();
+
+        listMostFreq = wordLengthCount.entrySet().stream()
+                .filter(entry -> entry.getValue() == max)
+                .map(entry -> entry.getKey())
+                .collect(Collectors.toList());
+
+        mostFreqLengths.put(max, listMostFreq);
     }
 
     public void putIntoWordLengthMap(int key, int value) {

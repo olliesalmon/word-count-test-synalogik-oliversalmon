@@ -5,11 +5,9 @@ import dto.TextStats;
 import java.util.List;
 
 public interface TextStatsFileDao {
-    List<String> getListTextFiles() throws NonExistentTextFileException;
+    List<String> getListTextFiles() throws NonExistentTextFileException, MissingDirectoryException;
 
-    void verifyTextFileNotEmpty(String textFileName) throws EmptyTextFileException;
-
-    String[] loadTextFileToArray(String textFileName) throws FilePersistenceException;
+    String[] loadTextFileToArray(String textFileName) throws FilePersistenceException, EmptyTextFileException;
 
     TextStats analyseTextArray(String[] textAsArray);
 
