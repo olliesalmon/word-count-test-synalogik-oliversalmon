@@ -1,13 +1,27 @@
 Synalogik Programming Test - Text analysis - Oliver Salmon
 ======
-## Assumptions and Instructions
+## Instructions, assumptions and notes
+### Instructions
+
+- In the root directory should exist two required directories: "textfiles/" and "testtextfiles/".
+- Please place your text files to analyse in the "textfiles/" directory. The "testtextfiles/" directory and files inside are required for unit tests.
+- The program has been packaged into an executable .jar file, which can be found in the projects root directory. To run, extract the project files to your computer, direct your computers command line teriminal to the project directory and execute by using the command "java -jar word-count-test.jar".
+- Alternatively, the program can also be ran by opening the project in an IDE and running the App class.
+
 ### Assumptions
 
 - Strings of only special characters (e.g. " - ") do not count as a word. The exception to this is the "&" character.
-- Other punctuation and special characters do not count to a words letter count (e.g. full-stops, hyphens-beteen-words, speech marks, etc).
-- Formatted numbers are acceptable as words, with a range of special characters (e.g. "/", "-", etc) on the inside of the string. Special characters at the start and end of formatted numbers still do not count towards letter count.
-- Similarly, special characters inside strings containing both letters and numbers (e.g. H-2O) will count towards the letter count, but those at the start and end will not.
+- Other punctuation and special characters do not count towards a words letter count (e.g. full-stops, hyphens-beteen-words, speech marks, etc).
+- Formatted numbers are accepted as words, with a range of special characters (e.g. "/", "-", etc) on the inside of the string. Special characters at the start and end of formatted numbers still do not count towards letter count.
+- Similarly, special characters inside strings containing both letters and numbers (e.g. H-2O) will count towards the letter count, but those at the string's start and end will not.
 
+### Notes:
+- Exceptions will be thrown in the case of the:
+	- "textfiles/" directory is missing.
+	- "textfiles/" directory does not contain any text files.
+	- The selected text file is empty or unreadable. 
+
+- The program sometimes yields slightly different results when compared with other word processors (e.g Microsoft Word). This is due to the assumptions of what constitutes as a word (e.g. Word accepts strings of special characters as a word (e.g. "*****" or " - ")).
 
 ## Problem Specification
 
@@ -49,10 +63,11 @@ CONTROLLER:
 DTO:
 TextStats:
 
-	private int noWords; (Getter/Setter)
-	private HashMap<Integer, Integer> wordLengthCount; (Getter)
-	private BigDecimal averageLength; (Getter/Setter)
-	private HashMap<Integer, List<int>> mostFreqLengths;	(Getter)
+	TreeMap<Integer, Integer> wordLengthCount; (Getter)
+	HashMap<Integer, List<int>> mostFreqLengths;	(Getter)
+	int noWords; (Getter/Setter)
+	BigDecimal averageLength; (Getter/Setter)
+
 
 	void incrementWordLengthCount(int wordLengthToIncrement);
 	void calculateAverageLength();
@@ -68,9 +83,10 @@ DAO:
 
 VIEW:
 
-	void displayStartBanner();
-	int displayContinueOrQuitMenuAndGetUserSelection();
+	int displayMenuAndGetUserSelection();
 	String displayTextFilesAndGetUserSelection(List(String));
 	void displayWordCount();
 	void displayAverageLength();
 	void displayWordLengthMap();
+	void displayMostFreqWords();
+	void displayErrorMessage();

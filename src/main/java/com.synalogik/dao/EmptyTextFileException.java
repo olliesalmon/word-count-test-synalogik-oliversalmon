@@ -1,4 +1,4 @@
-package dao;
+package com.synalogik.dao;
 
 public class EmptyTextFileException extends Exception {
     EmptyTextFileException(String message) {

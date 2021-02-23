@@ -1,4 +1,4 @@
-package dao;
+package com.synalogik.dao;
 
 public class MissingDirectoryException extends Exception {
     MissingDirectoryException(String message) {

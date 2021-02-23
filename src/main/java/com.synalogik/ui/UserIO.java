@@ -1,7 +1,7 @@
 /*
  * UserIO interface
  */
-package ui;
+package com.synalogik.ui;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package dao;
+package com.synalogik.dao;
 
 public class NonExistentTextFileException extends Exception {
     NonExistentTextFileException(String message) {

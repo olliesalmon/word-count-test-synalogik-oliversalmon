@@ -1,6 +1,6 @@
-package dao;
+package com.synalogik.dao;
 
-import dto.TextStats;
+import com.synalogik.dto.TextStats;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class TextStatsFileDaoImpl implements TextStatsFileDao {
     public final String DELIMITER = " ";
 
     public TextStatsFileDaoImpl() {
-        TEXT_FILE_DIR = "/textfiles";
+        TEXT_FILE_DIR = "textfiles/";
     }
 
     public TextStatsFileDaoImpl(String textFileDir) {
@@ -58,7 +58,7 @@ public class TextStatsFileDaoImpl implements TextStatsFileDao {
     public TextStats analyseTextArray(String[] textAsArray) {
         TextStats textStats = new TextStats();
         Pattern specialCharactersAnywhere = Pattern.compile("[ \\\\\"'/!@#&$%^*)(+=._-]");
-        Pattern specialCharactersStartEnd = Pattern.compile("^[ \\\\\"'/!@#&$%^*)(+=._-]|[ \\\\\"'/!@#&$%^*)(+=._-]$");
+        Pattern specialCharactersStartEnd = Pattern.compile("^[ \\\\\":;'/!@#&$%^*)(+=._-]|[ \\\\\"'/!@#&$%^*)(+=._-]$");
 
         Stream<String> streamArray = Arrays.stream(textAsArray);
         streamArray.forEach(currentString -> {

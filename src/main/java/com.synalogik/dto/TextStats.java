@@ -1,4 +1,4 @@
-package dto;
+package com.synalogik.dto;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,14 +6,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TextStats {
-    private int noWords;
     private final Map<Integer, Integer> wordLengthCount;
-    private BigDecimal averageLength;
     private final Map<Integer, List<Integer>> mostFreqLengths;
+    private int noWords;
+    private BigDecimal averageLength;
 
     public TextStats() {
         noWords = 0;
-        wordLengthCount = new HashMap<>();
+        wordLengthCount = new TreeMap<>();
         averageLength = new BigDecimal("0");
         mostFreqLengths = new HashMap<>();
     }

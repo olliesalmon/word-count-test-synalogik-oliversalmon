@@ -1,7 +1,7 @@
 /*
  * Implementation of UserIO interface
  */
-package ui;
+package com.synalogik.ui;
 
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class UserIOImpl implements UserIO {
     public int readInt(String prompt) {
         System.out.println(prompt);
         String stringInput;
-        int input = 0;
+        int input;
 
         while (true) {
             try {
@@ -39,7 +39,6 @@ public class UserIOImpl implements UserIO {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Enter an integer");
-                break;
             }
         }
         return input;
@@ -49,7 +48,7 @@ public class UserIOImpl implements UserIO {
     public int readInt(String prompt, int min, int max) {
         System.out.println(prompt);
         String stringInput;
-        int input = 0;
+        int input;
 
         while (true) {
             try {
@@ -62,7 +61,6 @@ public class UserIOImpl implements UserIO {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter an integer");
-                break;
             }
         }
         return input;
@@ -72,7 +70,7 @@ public class UserIOImpl implements UserIO {
     public double readDouble(String prompt) {
         System.out.println(prompt);
         String stringInput;
-        double input = 0;
+        double input;
 
         while (true) {
             try {
@@ -81,7 +79,6 @@ public class UserIOImpl implements UserIO {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Enter a double");
-                break;
             }
         }
         return input;
@@ -91,7 +88,7 @@ public class UserIOImpl implements UserIO {
     public double readDouble(String prompt, double min, double max) {
         System.out.println(prompt);
         String stringInput;
-        double input = 0;
+        double input;
 
         while (true) {
             try {
@@ -104,7 +101,6 @@ public class UserIOImpl implements UserIO {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter a double");
-                break;
             }
         }
         return input;
@@ -114,7 +110,7 @@ public class UserIOImpl implements UserIO {
     public float readFloat(String prompt) {
         System.out.println(prompt);
         String stringInput;
-        float input = 0;
+        float input;
 
         while (true) {
             try {
@@ -123,7 +119,6 @@ public class UserIOImpl implements UserIO {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Enter a float");
-                break;
             }
         }
         return input;
@@ -133,7 +128,7 @@ public class UserIOImpl implements UserIO {
     public float readFloat(String prompt, float min, float max) {
         System.out.println(prompt);
         String stringInput;
-        float input = 0;
+        float input;
 
         while (true) {
             try {
@@ -146,7 +141,6 @@ public class UserIOImpl implements UserIO {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter a float");
-                break;
             }
         }
         return input;
@@ -156,7 +150,7 @@ public class UserIOImpl implements UserIO {
     public long readLong(String prompt) {
         System.out.println(prompt);
         String stringInput;
-        long input = 0;
+        long input;
 
         while (true) {
             try {
@@ -165,7 +159,6 @@ public class UserIOImpl implements UserIO {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Enter a long");
-                break;
             }
         }
         return input;
@@ -175,7 +168,7 @@ public class UserIOImpl implements UserIO {
     public long readLong(String prompt, long min, long max) {
         System.out.println(prompt);
         String stringInput;
-        long input = 0;
+        long input;
 
         while (true) {
             try {
@@ -188,7 +181,6 @@ public class UserIOImpl implements UserIO {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter a long");
-                break;
             }
         }
         return input;
@@ -199,7 +191,7 @@ public class UserIOImpl implements UserIO {
         System.out.println(prompt);
         String stringInput;
         long longInput;
-        BigDecimal input = null;
+        BigDecimal input;
 
         while (true) {
             try {
@@ -209,7 +201,6 @@ public class UserIOImpl implements UserIO {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Enter currency as a decimal");
-                break;
             }
         }
         return input;
@@ -247,8 +238,7 @@ public class UserIOImpl implements UserIO {
                 String ldString = readString(prompt);
                 ld = LocalDate.parse(ldString, DateTimeFormatter.ofPattern("dd/MM/uuuu"));
                 break;
-            }
-            catch (DateTimeParseException e) {
+            } catch (DateTimeParseException e) {
                 System.out.println("Enter a valid date");
             }
         }
@@ -267,8 +257,7 @@ public class UserIOImpl implements UserIO {
                     continue;
                 }
                 break;
-            }
-            catch (DateTimeParseException e) {
+            } catch (DateTimeParseException e) {
                 System.out.println("Enter a valid date");
             }
         }

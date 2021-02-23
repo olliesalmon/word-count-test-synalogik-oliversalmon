@@ -1,6 +1,6 @@
-package dao;
+package com.synalogik.dao;
 
-import dto.TextStats;
+import com.synalogik.dto.TextStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
