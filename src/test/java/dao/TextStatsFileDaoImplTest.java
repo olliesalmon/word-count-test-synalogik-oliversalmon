@@ -31,10 +31,9 @@ class TextStatsFileDaoImplTest {
     }
 
     @Test
-    void testLoadEmptyTextFileToArray() throws EmptyTextFileException {
+    void testLoadEmptyTextFileToArray() {
         assertThrows(EmptyTextFileException.class, () -> testDao.loadTextFileToArray("1emptyfile.txt"),
-            "The file is empty so the exception should be thrown" );
-
+                "The file is empty so the exception should be thrown");
     }
 
     @Test
@@ -47,7 +46,109 @@ class TextStatsFileDaoImplTest {
     }
 
     @Test
-    void testAnalyseTextArray() {
+    void testAnalyseTextArraySimpleWord() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(5, 1);
+
+        String[] expectedArray = {"Hello"};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArraySpecialOutsideWord() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(7, 1);
+
+        String[] expectedArray = {"morning."};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArraySpecialInsideWord() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(4, 1);
+
+        String[] expectedArray = {"te.st"};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArrayNumberOnly() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(4, 1);
+
+        String[] expectedArray = {"1234"};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArrayFormattedNo() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(10, 1);
+
+        String[] expectedArray = {"18/05/2016"};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArrayFormattedNoAndSpecialOutside() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(10, 1);
+
+        String[] expectedArray = {"18/05/2016."};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArrayAndChar() {
+        TextStats expectedTextStats = new TextStats();
+        expectedTextStats.setNoWords(1);
+        expectedTextStats.putIntoWordLengthMap(1, 1);
+
+        String[] expectedArray = {"&"};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArraySpecialOnly() {
+        TextStats expectedTextStats = new TextStats();
+
+        String[] expectedArray = {"-"};
+
+        TextStats actualTextStats = testDao.analyseTextArray(expectedArray);
+
+        assertEquals(expectedTextStats, actualTextStats, "The actualTextStats should be equal the expectedTextStats");
+    }
+
+    @Test
+    void testAnalyseTextArrayWholeText() {
         TextStats expectedTextStats = new TextStats();
         expectedTextStats.setNoWords(9);
         expectedTextStats.putIntoWordLengthMap(1, 1);

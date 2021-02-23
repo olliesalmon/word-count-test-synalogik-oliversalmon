@@ -1,5 +1,13 @@
 Synalogik Programming Test - Text analysis - Oliver Salmon
 ======
+## Assumptions and Instructions
+### Assumptions
+
+- Strings of only special characters (e.g. " - ") do not count as a word. The exception to this is the "&" character.
+- Other punctuation and special characters do not count to a words letter count (e.g. full-stops, hyphens-beteen-words, speech marks, etc).
+- Formatted numbers are acceptable as words, with a range of special characters (e.g. "/", "-", etc) on the inside of the string. Special characters at the start and end of formatted numbers still do not count towards letter count.
+- Similarly, special characters inside strings containing both letters and numbers (e.g. H-2O) will count towards the letter count, but those at the start and end will not.
+
 
 ## Problem Specification
 

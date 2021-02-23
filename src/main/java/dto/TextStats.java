@@ -19,7 +19,7 @@ public class TextStats {
     }
 
     public void incrementWordLengthCount(int wordLengthToIncrement) {
-        wordLengthCount.merge(wordLengthToIncrement, 1, (a, b) -> a + b);
+        wordLengthCount.merge(wordLengthToIncrement, 1, Integer::sum);
     }
 
     public void calculateAverageLength() {
@@ -30,11 +30,9 @@ public class TextStats {
 
     public void calculateMostFreqLengths() {
         int max = Collections.max(wordLengthCount.values());
-        List<Integer> listMostFreq = new ArrayList<>();
-
-        listMostFreq = wordLengthCount.entrySet().stream()
+        List<Integer> listMostFreq = wordLengthCount.entrySet().stream()
                 .filter(entry -> entry.getValue() == max)
-                .map(entry -> entry.getKey())
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
         mostFreqLengths.put(max, listMostFreq);
@@ -46,6 +44,22 @@ public class TextStats {
 
     public void putIntoMostFreqLengthsMap(int countMostFreq, List<Integer> listMostFreq) {
         mostFreqLengths.put(countMostFreq, listMostFreq);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TextStats)) return false;
+        TextStats textStats = (TextStats) o;
+        return noWords == textStats.noWords &&
+                wordLengthCount.equals(textStats.wordLengthCount) &&
+                averageLength.equals(textStats.averageLength) &&
+                mostFreqLengths.equals(textStats.mostFreqLengths);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(noWords, wordLengthCount, averageLength, mostFreqLengths);
     }
 
     public int getNoWords() {
@@ -70,21 +84,5 @@ public class TextStats {
 
     public Map<Integer, List<Integer>> getMostFreqLengths() {
         return mostFreqLengths;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TextStats textStats = (TextStats) o;
-        return noWords == textStats.noWords &&
-                wordLengthCount.equals(textStats.wordLengthCount) &&
-                averageLength.equals(textStats.averageLength) &&
-                mostFreqLengths.equals(textStats.mostFreqLengths);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(noWords, wordLengthCount, averageLength, mostFreqLengths);
     }
 }

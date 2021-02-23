@@ -3,12 +3,14 @@ package dao;
 import dto.TextStats;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.lang.reflect.Array;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -28,12 +30,7 @@ public class TextStatsFileDaoImpl implements TextStatsFileDao {
     @Override
     public List<String> getListTextFiles() throws NonExistentTextFileException, MissingDirectoryException {
         File dir = new File(TEXT_FILE_DIR);
-        String[] textFilesArray = dir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.toLowerCase().endsWith(".txt");
-            }
-        });
+        String[] textFilesArray = dir.list((dir1, name) -> name.toLowerCase().endsWith(".txt"));
 
         if (textFilesArray == null) {
             throw new MissingDirectoryException("The textfile directory is missing.");
@@ -51,39 +48,35 @@ public class TextStatsFileDaoImpl implements TextStatsFileDao {
             if (textFileAsString.isBlank()) {
                 throw new EmptyTextFileException("The selected text-file is empty");
             }
-            String[] textFileAsArray = textFileAsString.split(DELIMITER);
-            return textFileAsArray;
+            return textFileAsString.split(DELIMITER);
         } catch (IOException e) {
             throw new FilePersistenceException("Could not load text-file into memory");
         }
     }
 
-    //If word contains no letters
-        //If word contains numbers and specials e.g."16/02.2011"
-            //Remove specials from start and end. Count and increment
-        //Else if word contains no specials (only numbers)
-            //Count and increment
-    //Else (word does contain letters)
-        //Remove all specials. Count and increment.
-
-
-
     @Override
     public TextStats analyseTextArray(String[] textAsArray) {
         TextStats textStats = new TextStats();
+        Pattern specialCharactersAnywhere = Pattern.compile("[ \\\\\"'/!@#&$%^*)(+=._-]");
+        Pattern specialCharactersStartEnd = Pattern.compile("^[ \\\\\"'/!@#&$%^*)(+=._-]|[ \\\\\"'/!@#&$%^*)(+=._-]$");
 
         Stream<String> streamArray = Arrays.stream(textAsArray);
-        streamArray.forEach(word -> {
-            if (!word.matches("[A-Za-z]")) {
-                if (word.matches("[0-9]") && word.matches("[!@#$%^&*)(+=._-]")) {
-                    word.replaceAll("^[!@#$%^&*)(+=._-]$", "");
-                    textStats.incrementWordLengthCount(word.length());
-                }
+        streamArray.forEach(currentString -> {
+            //If currentString contains numbers - remove specials from start and end of string only.
+            if (currentString.chars().anyMatch(Character::isDigit)) {
+                currentString = currentString.replaceAll(specialCharactersStartEnd.pattern(), "");
             }
-
-            //TODO
+            // If no numbers and if string isn't "&", remove all special characters
+            else if (!currentString.equals("&")) {
+                currentString = currentString.replaceAll(specialCharactersAnywhere.pattern(), "");
+            }
+            //If string not empty, increment textStats accordingly.
+            if (!currentString.isBlank()) {
+                textStats.incrementWordLengthCount(currentString.length());
+                textStats.setNoWords(textStats.getNoWords() + 1);
+            }
         });
-        return null;
+        return textStats;
     }
 
     @Override
